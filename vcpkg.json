@@ -1,0 +1,11 @@
+{
+  "name": "cpprestclient",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "curl",
+      "version>=": "8.20.0"
+    }
+  ],
+  "builtin-baseline": "cd61e1e26a038e82d6550a3ebbe0fbbfe7da78e3"
+}

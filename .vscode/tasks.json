@@ -8,6 +8,7 @@
                 "--preset",
                 "dev-debug"
             ],
+            "dependsOn": "VCPKG install",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -30,6 +31,18 @@
             "problemMatcher": [
                 "$msCompile"
             ]
+        },
+        {
+            "label": "VCPKG install",
+            "type": "shell",
+            "command": "${userHome}\\vcpkg\\vcpkg.exe",
+            "args": [
+                "install"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
         }
     ],
     "version": "2.0.0"

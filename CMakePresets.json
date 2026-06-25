@@ -5,9 +5,10 @@
             "name": "dev-debug",
             "displayName": "Dev Debug (build/)",
             "description": "Configure out-of-source build in build/",
-            "binaryDir": "${sourceDir}/build",
+            "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
-                "CMAKE_CXX_STANDARD": "23"
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake"
             }
         },
         {

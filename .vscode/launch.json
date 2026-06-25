@@ -5,7 +5,7 @@
             "name": "Debug cpp_rest_client (MSVC multi-config)",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/cpp_rest_client.exe",
+            "program": "${workspaceFolder}/build/dev-debug/Debug/cpp_rest_client.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
