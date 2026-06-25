@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.10)
 
 project(cpp_rest_client VERSION 1.0)
 
+# Add /bigobj for MSVC builds
+if (MSVC)
+    add_compile_options(/bigobj)
+endif()
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
