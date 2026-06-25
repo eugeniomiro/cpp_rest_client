@@ -1,0 +1,36 @@
+{
+    "tasks": [
+        {
+            "label": "CMake: configure (build/)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--preset",
+                "dev-debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CMake: build (Debug, build/)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "--preset",
+                "dev-debug"
+            ],
+            "dependsOn": "CMake: configure (build/)",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        }
+    ],
+    "version": "2.0.0"
+}

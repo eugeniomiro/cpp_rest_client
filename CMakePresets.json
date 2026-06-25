@@ -1,0 +1,50 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "dev-debug",
+            "displayName": "Dev Debug (build/)",
+            "description": "Configure out-of-source build in build/",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_CXX_STANDARD": "23"
+            }
+        },
+        {
+            "name": "linux-gcc-debug",
+            "displayName": "Linux GCC Debug (build-wsl/)",
+            "description": "Configure out-of-source Linux build in build-wsl/",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-wsl",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_CXX_STANDARD": "23"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "dev-debug",
+            "displayName": "Build Debug",
+            "configurePreset": "dev-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-gcc-debug",
+            "displayName": "Build Linux GCC Debug",
+            "configurePreset": "linux-gcc-debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        }
+    ]
+}

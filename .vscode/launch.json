@@ -1,0 +1,40 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug cpp_rest_client (MSVC multi-config)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/cpp_rest_client.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "preLaunchTask": "CMake: build (Debug, build/)"
+        },
+        {
+            "name": "Debug cpp_rest_client (WSL Ubuntu-24.04)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/mnt/d/repos/cpp_rest_client/build-wsl/cpp_rest_client",
+            "args": [],
+            "cwd": "/mnt/d/repos/cpp_rest_client",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "pipeTransport": {
+                "pipeProgram": "C:/Windows/System32/wsl.exe",
+                "pipeArgs": [
+                    "-d",
+                    "Ubuntu-24.04",
+                    "bash",
+                    "-lc"
+                ],
+                "debuggerPath": "/usr/bin/gdb",
+                "pipeCwd": "${workspaceFolder}"
+            },
+            "sourceFileMap": {
+                "/mnt/d/repos/cpp_rest_client": "${workspaceFolder}"
+            },
+            "preLaunchTask": "WSL Ubuntu: build only"
+        }
+    ]
+}
