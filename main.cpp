@@ -1,37 +1,72 @@
-#include <curl/curl.h>
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
+#include <boost/beast/ssl.hpp>
+#include <boost/asio/connect.hpp>
+#include <boost/asio/ip/tcp.hpp>
 #include <iostream>
 #include <string>
 
-static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
-    ((std::string*)userp)->append((char*)contents, size * nmemb);
-    return size * nmemb;
-}
+namespace beast = boost::beast;
+namespace http = beast::http;
+namespace net = boost::asio;
+namespace ssl = net::ssl;
+using tcp = net::ip::tcp;
 
-int main() {
-    CURL* curl = curl_easy_init();
-    if (!curl) return 1;
+int main()
+{
+    try
+    {
+        const std::string host = "api.ejemplo.com";
+        const std::string port = "443";
+        const std::string target = "/recurso";
+        const std::string token = "TU_BEARER_TOKEN";
+        const int version = 11; // HTTP/1.1
 
-    std::string response;
-    std::string token = "TU_TOKEN";
-    std::string authHeader = "Authorization: Bearer " + token;
+        net::io_context ioc;
+        ssl::context ctx{ssl::context::tls_client};
+        ctx.set_default_verify_paths();
 
-    struct curl_slist* headers = nullptr;
-    headers = curl_slist_append(headers, authHeader.c_str());
-    headers = curl_slist_append(headers, "Content-Type: application/json");
+        tcp::resolver resolver{ioc};
+        beast::ssl_stream<beast::tcp_stream> stream{ioc, ctx};
 
-    curl_easy_setopt(curl, CURLOPT_URL, "https://api.ejemplo.com/recurso");
-    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+        if (!SSL_set_tlsext_host_name(stream.native_handle(), host.c_str()))
+        {
+            throw beast::system_error(
+                beast::error_code(static_cast<int>(::ERR_get_error()),
+                                  net::error::get_ssl_category()));
+        }
 
-    CURLcode res = curl_easy_perform(curl);
-    if (res != CURLE_OK) {
-        std::cerr << "Error: " << curl_easy_strerror(res) << "\n";
-    } else {
-        std::cout << response << "\n";
+        auto const results = resolver.resolve(host, port);
+        beast::get_lowest_layer(stream).connect(results);
+
+        stream.handshake(ssl::stream_base::client);
+
+        http::request<http::empty_body> req{http::verb::get, target, version};
+        req.set(http::field::host, host);
+        req.set(http::field::user_agent, "mi-cliente-beast");
+        req.set(http::field::authorization, "Bearer " + token);
+        req.set(http::field::accept, "application/json");
+
+        http::write(stream, req);
+
+        beast::flat_buffer buffer;
+        http::response<http::string_body> res;
+        http::read(stream, buffer, res);
+
+        std::cout << res << std::endl;
+
+        beast::error_code ec;
+        stream.shutdown(ec);
+        if (ec && ec != net::error::eof)
+        {
+            throw beast::system_error{ec};
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
     }
 
-    curl_slist_free_all(headers);
-    curl_easy_cleanup(curl);
     return 0;
 }

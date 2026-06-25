@@ -3,8 +3,16 @@
   "version": "0.1.0",
   "dependencies": [
     {
-      "name": "curl",
-      "version>=": "8.20.0"
+      "name": "boost-beast",
+      "version>=": "1.91.0"
+    },
+    {
+      "name": "boost-asio",
+      "version>=": "1.91.0"
+    },
+    {
+      "name": "openssl",
+      "version>=": "3.0.2"
     }
   ],
   "builtin-baseline": "cd61e1e26a038e82d6550a3ebbe0fbbfe7da78e3"

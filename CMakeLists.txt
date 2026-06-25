@@ -5,9 +5,10 @@ project(cpp_rest_client VERSION 1.0)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-find_package(curl REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system beast asio)
 
 add_executable(cpp_rest_client main.cpp)
 
-target_include_directories(cpp_rest_client PRIVATE ${CURL_INCLUDE_DIRS})
-target_link_libraries(cpp_rest_client PRIVATE CURL::libcurl)
+target_include_directories(cpp_rest_client PRIVATE ${Boost_INCLUDE_DIRS})
+target_link_libraries(cpp_rest_client PRIVATE ${Boost_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto)
