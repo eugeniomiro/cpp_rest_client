@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 find_package(OpenSSL REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system beast asio)
+find_package(Boost REQUIRED COMPONENTS system beast asio program_options)
 
 add_executable(cpp_rest_client main.cpp)
 

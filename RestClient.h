@@ -29,13 +29,8 @@ class RestClient
 public:
     using Headers = std::vector<std::pair<std::string, std::string>>;
 
-    RestClient(net::any_io_executor executor,
-               ssl::context &ssl_ctx,
-               std::string host,
-               std::string port = "443",
-               std::string user_agent = "rest-client-beast/1.0")
-        : executor_(std::move(executor)), ssl_ctx_(ssl_ctx), host_(std::move(host)), port_(std::move(port))
-        , user_agent_(std::move(user_agent)) {}
+    RestClient(net::any_io_executor executor, ssl::context &ssl_ctx, std::string host, std::string port, std::string user_agent)
+        : executor_(std::move(executor)), ssl_ctx_(ssl_ctx), host_(std::move(host)), port_(std::move(port)), user_agent_(std::move(user_agent)) {}
 
     net::awaitable<http::response<http::string_body>> async_get(
         std::string target,

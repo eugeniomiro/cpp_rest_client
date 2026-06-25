@@ -11,6 +11,10 @@
       "version>=": "1.91.0"
     },
     {
+      "name": "boost-program-options",
+      "version>=": "1.91.0"
+    },
+    {
       "name": "openssl",
       "version>=": "3.0.2"
     }
