@@ -1,0 +1,23 @@
+BasedOnStyle: Google
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+BreakBeforeBraces: Allman
+ColumnLimit: 185
+
+# SortIncludes: Never
+IndentCaseLabels: false
+AccessModifierOffset: -4
+AllowShortFunctionsOnASingleLine: Inline
+
+AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments: true
+
+PointerAlignment: Left
+DerivePointerAlignment: false
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+
+AllowShortIfStatementsOnASingleLine: Never
+InsertBraces: true
+AllowShortLambdasOnASingleLine: None
